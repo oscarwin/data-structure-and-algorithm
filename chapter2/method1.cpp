@@ -9,6 +9,7 @@ int main()
 	int temp = 0;
 	for(int i = 0; i < icount; i++)
 	{
+		temp = 0;
 		for(int j = i; j < icount; j++)
 		{
 			temp += iarray[j];
