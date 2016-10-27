@@ -7,4 +7,6 @@ Data Structure and Algorithm Analysis is my first book about algorithm, the repo
 - windows平台
 - IDE采用vs2012
 
-*所有代码都通过测试可以直接运行*
+### 书籍信息
+- 书名：数据结构与算法分析（C++描述）第三版
+- 作者：Mark Allen Weiss
