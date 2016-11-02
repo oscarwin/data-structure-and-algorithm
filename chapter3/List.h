@@ -5,6 +5,7 @@
 #ifndef LIST_H
 #define  LIST_H
 
+#define NULL 0
 namespace stl
 {
 	template <typename Object> 
@@ -80,8 +81,8 @@ namespace stl
 		{
 		public:
 			//构造函数，带默认值为NULL
-			const_iterator(Node* n = NULL)
-				:current(n){ }
+			const_iterator()
+				:current(NULL){ }
 
 			//重载取引用操作符，解引用操作符是无参的
 			const Object& operator * () const
@@ -114,33 +115,35 @@ namespace stl
 			{
 				return ! (this->operator== (iter));
 			}
+
+			//重载构造函数
+			const_iterator(typename  List<Object>::Node* p ) : current(p) { }
 		protected:
 			//定义一个Node*的变量来保存迭代器的位置，申明为protected是为了派生类能访问到
-			Node* current;
+			typename List<Object>::Node* current;
 
 			//返回迭代器所指节点数据对象的引用,不改变const_iterator的任何数据，定义为const
 			//该函数只在内部使用，申明为protected为了派生类能使用
-			const Object & retrieve() const
+			Object & retrieve() const
 			{
 				return current->data;
 			}
-			const_iterator( Node* p ) : current(p) { }
+
 
 			//为了能访问List<Object>的成员变量，将其申明为const_iterator的友元
 			friend class List<Object>;
 		};
 
-
+		
 		//从const_iterator继承过来
 		class iterator : public const_iterator
 		{
 		public:
 			iterator();
-			~iterator();
 			//重载取引用操作符，解引用操作符是无参的
 			Object& operator * () const
 			{
-				retrieve();
+				return retrieve();
 			}
 
 			iterator & operator ++ ()
@@ -156,10 +159,11 @@ namespace stl
 				++*this;
 				return ret;
 			}
-		protected:
-			iterator(Node* p) : const_iterator (p) { }
+
+			iterator(typename List<Object>::Node* p) : const_iterator (p) { }
 		};
 
+		public:
 		/************************************************************************/
 		/* 函数名：begin end成员
 		/* 时   间：2016.10.27
@@ -240,23 +244,24 @@ namespace stl
 		/************************************************************************/
 		Object & front() const
 		{
-			return head->next->data;
+			return *begin();
 		}
 
-		const Object & front() const
-		{
-			return head->next->data;
-		}
+		//书中的一处错误，C++不能重载形参相同的函数
+		//const Object & front(Node* n) const
+		//{
+		//	return head->next->data;
+		//}
 
 		Object & back() const
 		{
-            return tail->prev->data;
+            return *--end();
 		}
 
-		const Object & back() const
-		{
-			return tail->prev->data;
-		}
+		//const Object & back(Node*) const
+		//{
+		//	return tail->prev->data;
+		//}
 
 		/************************************************************************/
 		/* 说   明：删除元素
@@ -299,7 +304,7 @@ namespace stl
 
 	private:
 		//定义节点
-		struct  Node
+		typedef struct  Node
 		{
 			Object data;
 			Node* prev;
