@@ -34,6 +34,3 @@ class Solution:
             curNode = curNode.next
         
         return result.next
-        
-
-                
