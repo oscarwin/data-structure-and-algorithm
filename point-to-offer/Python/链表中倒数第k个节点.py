@@ -1,3 +1,6 @@
+# 题目描述
+# 输入一个链表，输出该链表中倒数第k个结点。
+
 # -*- coding:utf-8 -*-
 # class ListNode:
 #     def __init__(self, x):
