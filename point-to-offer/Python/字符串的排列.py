@@ -19,7 +19,3 @@ class Solution:
         
         
         for i in range(ss_len):
-
-
-
-
